@@ -5,6 +5,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Descomprimir proyecto
+        run: unzip -q -o El_Vacio_Profundo.zip -d project
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
@@ -13,8 +15,9 @@ jobs:
         with:
           gradle-version: 9.2.1
       - name: Build
+        working-directory: project
         run: gradle build --no-daemon --stacktrace
       - uses: actions/upload-artifact@v4
         with:
           name: El_Vacio_Profundo-jar
-          path: build/libs/*.jar
+          path: project/build/libs/*.jar
